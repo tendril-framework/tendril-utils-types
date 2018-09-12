@@ -23,7 +23,7 @@ Docstring for mass
 """
 
 import re
-from unitbase import NumericalUnitBase
+from .unitbase import NumericalUnitBase
 
 
 class Mass(NumericalUnitBase):

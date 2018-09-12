@@ -16,12 +16,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from tendril.utils.types.time import timestamp_factory
-from tendril.utils.types.time import TimeStamp
-from tendril.utils.types.time import TimeSpan
-from tendril.utils.types.time import TimeDelta
+from .time import timestamp_factory
+from .time import TimeStamp
+from .time import TimeSpan
+from .time import TimeDelta
 
-from tendril.utils.types.unitbase import Percentage
+from .unitbase import Percentage
 
 from collections import deque
 import copy

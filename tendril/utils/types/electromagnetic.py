@@ -21,11 +21,11 @@ See the COPYING, README, and INSTALL files for more information
 
 import re
 
-from unitbase import UnitBase
-from unitbase import NumericalUnitBase
-from unitbase import Percentage
-from unitbase import GainBase
-from unitbase import parse_none
+from .unitbase import UnitBase
+from .unitbase import NumericalUnitBase
+from .unitbase import Percentage
+from .unitbase import GainBase
+from .unitbase import parse_none
 
 
 class Resistance(NumericalUnitBase):
