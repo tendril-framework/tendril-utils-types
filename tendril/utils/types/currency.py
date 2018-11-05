@@ -150,6 +150,8 @@ class CurrencyDefinition(object):
 
         if BASE_CURRENCY == code:
             return 1
+        if code == 'USD':
+            return 72
         apiurl = 'http://data.fixer.io/api/latest?'
         params = {'access_key': FIXER_IO_API_KEY,
                   'symbols': ','.join([code, BASE_CURRENCY])}

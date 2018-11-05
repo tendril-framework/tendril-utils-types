@@ -130,5 +130,8 @@ Data Structures / Composite Types
 """
 
 
+__version__ = '0.1.2'
+
+
 class ParseException(Exception):
     pass

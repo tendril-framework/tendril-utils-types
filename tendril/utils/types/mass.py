@@ -27,6 +27,6 @@ from .unitbase import NumericalUnitBase
 
 
 class Mass(NumericalUnitBase):
-    _regex_std = re.compile(r"^(?P<numerical>[-+]?[\d]+\.?[\d]*)\s?(?P<order>[numk]?g?)(?P<residual>[\d]*)$")  # noqa
+    _regex_std = re.compile(r"^(?P<numerical>[-+]?[\d]+\.?[\d]*)\s?(?P<order>[numk]?g?)r?m?(?P<residual>[\d]*)$")  # noqa
     _ostrs = ['ng', 'ug', 'mg', 'g', 'kg']
     _dostr = 'g'
