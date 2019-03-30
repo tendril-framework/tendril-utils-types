@@ -27,11 +27,11 @@ use cases of Currencies within tendril, i.e. :
 - Handling currency arithmetic and comparisons.
 
 This module uses a specific `Base Currency`, defined by
-:const:`tendril.utils.config.BASE_CURRENCY` and
-:const:`tendril.utils.config.BASE_CURRENCY_SYMBOL` and available as this
+:const:`tendril.config.legacy.BASE_CURRENCY` and
+:const:`tendril.config.legacy.BASE_CURRENCY_SYMBOL` and available as this
 module's :data:`native_currency_defn` module variable. In case this module is
 to be used independent of Tendril, at least those configuration options
-*must* be defined in :mod:`tendril.utils.config`.
+*must* be defined in :mod:`tendril.config`.
 
 .. rubric:: Module Contents
 
@@ -51,9 +51,9 @@ to be used independent of Tendril, at least those configuration options
 
 from cachecontrol.heuristics import ExpiresAfter
 
-from tendril.utils.config import BASE_CURRENCY
-from tendril.utils.config import BASE_CURRENCY_SYMBOL
-from tendril.utils.config import FIXER_IO_API_KEY
+from tendril.config.legacy import BASE_CURRENCY
+from tendril.config.legacy import BASE_CURRENCY_SYMBOL
+from tendril.config.legacy import FIXER_IO_API_KEY
 
 from tendril.utils import www
 import numbers
@@ -183,8 +183,8 @@ class CurrencyDefinition(object):
 #: The native currency definition used by the module
 #:
 #: This definition uses the code contained in
-#: :const:`tendril.utils.config.BASE_CURRENCY` and symbol
-#: :const:`tendril.utils.config.BASE_CURRENCY_SYMBOL`. Application
+#: :const:`tendril.config.legacy.BASE_CURRENCY` and symbol
+#: :const:`tendril.config.legacy.BASE_CURRENCY_SYMBOL`. Application
 #: code should import this definition instead of creating new currency
 #: definitions whenever one is needed to represent a native currency value.
 native_currency_defn = CurrencyDefinition(BASE_CURRENCY, BASE_CURRENCY_SYMBOL)
