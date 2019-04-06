@@ -27,9 +27,9 @@ use cases of Currencies within tendril, i.e. :
 - Handling currency arithmetic and comparisons.
 
 This module uses a specific `Base Currency`, defined by
-:const:`tendril.config.legacy.BASE_CURRENCY` and
-:const:`tendril.config.legacy.BASE_CURRENCY_SYMBOL` and available as this
-module's :data:`native_currency_defn` module variable. In case this module is
+:const:`tendril.config.BASE_CURRENCY` and
+:const:`tendril.config.BASE_CURRENCY_SYMBOL` and available as this module's
+:data:`native_currency_defn` module variable. In case this module is
 to be used independent of Tendril, at least those configuration options
 *must* be defined in :mod:`tendril.config`.
 
@@ -51,12 +51,15 @@ to be used independent of Tendril, at least those configuration options
 
 from cachecontrol.heuristics import ExpiresAfter
 
-from tendril.config.legacy import BASE_CURRENCY
-from tendril.config.legacy import BASE_CURRENCY_SYMBOL
+from tendril.config import BASE_CURRENCY
+from tendril.config import BASE_CURRENCY_SYMBOL
+from tendril.config import BASE_CURRENCY_NAME
+from tendril.config import BASE_CURRENCY_LANG
 from tendril.config.legacy import FIXER_IO_API_KEY
 
 from tendril.utils import www
 import numbers
+from num2words import num2words
 
 from .unitbase import TypedComparisonMixin
 
@@ -86,9 +89,11 @@ class CurrencyDefinition(object):
     :param exchval: Exchange rate to use, if not automatic. Optional.
 
     """
-    def __init__(self, code, symbol=None, exchval=None):
+    def __init__(self, code, symbol=None, name=None, exchval=None, lang='en'):
         self._code = code
         self._symbol = symbol
+        self._name = name
+        self._lang = lang
         if exchval is not None:
             self._exchval = exchval
         else:
@@ -116,6 +121,17 @@ class CurrencyDefinition(object):
             return self._symbol
         else:
             return self._code
+
+    @property
+    def name(self):
+        if self._name is not None:
+            return self._name
+        else:
+            return self._code
+
+    @property
+    def lang(self):
+        return self._lang or 'en'
 
     @property
     def exchval(self):
@@ -180,14 +196,18 @@ class CurrencyDefinition(object):
         return "<CurrencyDefinition {0} {1} {2}>" \
                "".format(self.code, self.symbol, self.exchval)
 
+
 #: The native currency definition used by the module
 #:
 #: This definition uses the code contained in
-#: :const:`tendril.config.legacy.BASE_CURRENCY` and symbol
-#: :const:`tendril.config.legacy.BASE_CURRENCY_SYMBOL`. Application
+#: :const:`tendril.config.BASE_CURRENCY` and symbol
+#: :const:`tendril.config.BASE_CURRENCY_SYMBOL`. Application
 #: code should import this definition instead of creating new currency
 #: definitions whenever one is needed to represent a native currency value.
-native_currency_defn = CurrencyDefinition(BASE_CURRENCY, BASE_CURRENCY_SYMBOL)
+native_currency_defn = CurrencyDefinition(code=BASE_CURRENCY, 
+                                          symbol=BASE_CURRENCY_SYMBOL,
+                                          name=BASE_CURRENCY_NAME,
+                                          lang=BASE_CURRENCY_LANG)
 
 
 class CurrencyValue(TypedComparisonMixin):
@@ -252,6 +272,13 @@ class CurrencyValue(TypedComparisonMixin):
 
         """
         return "{0} {1:,.2f}".format(BASE_CURRENCY_SYMBOL, self.native_value)
+    
+    @property
+    def native_words(self):
+        return "{0} {1}".format(
+            native_currency_defn.name,
+            num2words(self.native_value, lang=native_currency_defn.lang).title()
+        )
 
     @property
     def source_value(self):
@@ -274,6 +301,13 @@ class CurrencyValue(TypedComparisonMixin):
 
         """
         return "{0} {1:,.2f}".format(self._currency_def.symbol, self._val)
+    
+    @property
+    def source_words(self):
+        return "{0} {1}".format(
+            self._currency_def.name,
+            num2words(self.source_value, lang=self._currency_def.lang).title()
+        )
 
     @property
     def source_currency(self):
