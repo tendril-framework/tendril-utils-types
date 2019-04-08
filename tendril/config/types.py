@@ -4,28 +4,28 @@ from tendril.utils.config import ConfigOption
 from tendril.utils import log
 logger = log.get_logger(__name__, log.DEFAULT)
 
-depends = []
+depends = ['tendril.config.core']
 
 
 config_elements_currency = [
     ConfigOption(
         'BASE_CURRENCY',
-        "INR",
+        "'INR'",
         "The code for the base currency."
     ),
     ConfigOption(
         'BASE_CURRENCY_SYMBOL',
-        "INR ",
+        "'INR '",
         "The symbol for the base currency."
     ),
     ConfigOption(
         'BASE_CURRENCY_NAME',
-        "Indian Rupees",
+        "'Indian Rupees'",
         "The name of the base currency when used with num2words.",
     ),
     ConfigOption(
         'BASE_CURRENCY_LANG',
-        "en_IN",
+        "'en_IN'",
         "The language to use for the base currency when used with num2words."
     ),
     ConfigOption(

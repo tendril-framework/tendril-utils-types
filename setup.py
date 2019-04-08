@@ -14,9 +14,9 @@ with open('README.rst') as readme_file:
     readme = readme_file.read()
 
 requirements = [
-    'tendril-utils-core>=0.1.11',
+    'tendril-utils-core>=0.1.12',
     'tendril-config>=0.1.6',
-    'tendril-utils-www>=0.1.4',
+    'tendril-utils-www>=0.1.5',
     'six',
     'cachecontrol[filecache]',
     'arrow',
@@ -29,7 +29,7 @@ test_requirements = [
 
 setup(
     name='tendril-utils-types',
-    version='0.1.4',
+    version='0.1.5',
     description="Type classes for tendril",
     long_description=readme,
     author="Chintalagiri Shashank",

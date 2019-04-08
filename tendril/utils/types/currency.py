@@ -55,7 +55,7 @@ from tendril.config import BASE_CURRENCY
 from tendril.config import BASE_CURRENCY_SYMBOL
 from tendril.config import BASE_CURRENCY_NAME
 from tendril.config import BASE_CURRENCY_LANG
-from tendril.config.legacy import FIXER_IO_API_KEY
+from tendril.config import FIXER_IO_API_KEY
 
 from tendril.utils import www
 import numbers
