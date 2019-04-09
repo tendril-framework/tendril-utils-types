@@ -275,10 +275,16 @@ class CurrencyValue(TypedComparisonMixin):
     
     @property
     def native_words(self):
-        return "{0} {1}".format(
-            native_currency_defn.name,
-            num2words(self.native_value, lang=native_currency_defn.lang).title()
-        )
+        try:
+            return num2words(self.native_value, to='currency', adjective=True,
+                             currency=native_currency_defn.code,
+                             lang=native_currency_defn.lang).title()
+        except NotImplementedError:
+            return "{0} {1}".format(
+                native_currency_defn.name,
+                num2words(self.native_value,
+                          lang=native_currency_defn.lang).title()
+            )
 
     @property
     def source_value(self):
@@ -304,10 +310,16 @@ class CurrencyValue(TypedComparisonMixin):
     
     @property
     def source_words(self):
-        return "{0} {1}".format(
-            self._currency_def.name,
-            num2words(self.source_value, lang=self._currency_def.lang).title()
-        )
+        try:
+            return num2words(self.source_value, to='currency', adjective=True,
+                             currency=self._currency_def.code,
+                             lang=self._currency_def.lang).title()
+        except NotImplementedError:
+            return "{0} {1}".format(
+                self._currency_def.name,
+                num2words(self.source_value,
+                          lang=self._currency_def.lang).title()
+            )
 
     @property
     def source_currency(self):
