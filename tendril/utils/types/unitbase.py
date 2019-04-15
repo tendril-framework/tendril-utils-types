@@ -193,7 +193,7 @@ class NumericalUnitBase(TypedComparisonMixin, UnitBase):
       represents a unit value 1000 times smaller than the next.
     - In case `_orders` is provided, it is assumed that the first
       element of each tuple is the string representation of the order,
-      and the second element is the multipicative factor relative to
+      and the second element is the multiplicative factor relative to
       the default order string.
     - In both cases, note that first order within which the unit value's
       representation lies between 1 and 1000 is used to produce the unit's

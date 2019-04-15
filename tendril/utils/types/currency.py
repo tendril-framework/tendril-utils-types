@@ -58,10 +58,12 @@ from tendril.config import BASE_CURRENCY_LANG
 from tendril.config import FIXER_IO_API_KEY
 
 from tendril.utils import www
-import numbers
+from decimal import Decimal
+from numbers import Number
 from num2words import num2words
 
-from .unitbase import TypedComparisonMixin
+from .unitbase import NumericalUnitBase
+from .unitbase import Percentage
 
 # TODO Switch to a heuristic which uses a cached value only if a fresh
 # one is not available.
@@ -210,7 +212,18 @@ native_currency_defn = CurrencyDefinition(code=BASE_CURRENCY,
                                           lang=BASE_CURRENCY_LANG)
 
 
-class CurrencyValue(TypedComparisonMixin):
+def _currency_parser(cv, value):
+    # TODO Also manage currency definition?
+    parts = value.split(' ')
+    if len(parts) > 1:
+        assert parts[0].strip() in [cv._currency_def.code,
+                                    cv._currency_def.symbol]
+        return Decimal(parts[1])
+    else:
+        return Decimal(parts[0])
+
+
+class CurrencyValue(NumericalUnitBase):
     """
     Instances of this class define a specific currency value, or a certain
     sum of money.
@@ -244,12 +257,17 @@ class CurrencyValue(TypedComparisonMixin):
         _cmpkey
 
     """
-    def __init__(self, val, currency_def):
+
+    _has_bare_order = True
+    _orders = [('', 1)]
+    _parse_func = _currency_parser
+
+    def __init__(self, value, currency_def=native_currency_defn):
         if isinstance(currency_def, CurrencyDefinition):
             self._currency_def = currency_def
         else:
             self._currency_def = CurrencyDefinition(currency_def)
-        self._val = val
+        super(CurrencyValue, self).__init__(value)
 
     @property
     def native_value(self):
@@ -260,7 +278,7 @@ class CurrencyValue(TypedComparisonMixin):
         :rtype: float
 
         """
-        return self._val * self._currency_def.exchval
+        return self._value * self._currency_def.exchval
 
     @property
     def native_string(self):
@@ -295,7 +313,7 @@ class CurrencyValue(TypedComparisonMixin):
         :rtype: float
 
         """
-        return self._val
+        return self._value
 
     @property
     def source_string(self):
@@ -374,7 +392,7 @@ class CurrencyValue(TypedComparisonMixin):
 
         :rtype: :class:`CurrencyValue`
         """
-        if isinstance(other, numbers.Number) and other == 0:
+        if isinstance(other, Number) and other == 0:
             return self
         if not isinstance(other, CurrencyValue):
             raise NotImplementedError
@@ -407,12 +425,20 @@ class CurrencyValue(TypedComparisonMixin):
 
         :rtype: :class:`CurrencyValue`
         """
-        if isinstance(other, numbers.Number):
+        if isinstance(other, Number):
             return CurrencyValue(
                 self.source_value * other, self.source_currency
             )
+        elif isinstance(other, Percentage):
+            return CurrencyValue(
+                self.source_value * other.value / 100,
+                self.source_currency
+            )
         else:
             raise NotImplementedError
+
+    def __rmul__(self, other):
+        return self.__mul__(other)
 
     def __div__(self, other):
         """
@@ -433,7 +459,7 @@ class CurrencyValue(TypedComparisonMixin):
 
         :rtype: :class:`CurrencyValue`
         """
-        if isinstance(other, numbers.Number):
+        if isinstance(other, Number):
             return CurrencyValue(
                 self.source_value / other, self.source_currency
             )
@@ -444,9 +470,6 @@ class CurrencyValue(TypedComparisonMixin):
 
     def __truediv__(self, other):
         return self.__div__(other)
-
-    def __rmul__(self, other):
-        return self.__mul__(other)
 
     def __sub__(self, other):
         """
@@ -465,7 +488,7 @@ class CurrencyValue(TypedComparisonMixin):
 
         :rtype: :class:`CurrencyValue`
         """
-        if isinstance(other, numbers.Number) and other == 0:
+        if isinstance(other, Number) and other == 0:
             return self
         elif not isinstance(other, CurrencyValue):
             raise NotImplementedError
