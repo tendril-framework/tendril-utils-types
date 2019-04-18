@@ -48,6 +48,20 @@ class Frequency(NumericalUnitBase):
         return self.__rdiv__(other)
 
 
+class DateSpan(NumericalUnitBase):
+    _regex_std = re.compile(r"^(?P<numerical>[-+]?[\d]+\.?[\d]*)\s?(?P<order>(y(ea)?r?)|(d(ay)?))s?(?P<residual>)$")  # noqa
+    _orders = [('year', lambda x: x * 365),
+               ('yr', lambda x: x * 365),
+               ('y', lambda x: x * 365),
+               ('day', 1), ('d', 1)]
+    _rorders = [('year', 365),
+                ('day',  1)]
+    _dostr = 'day'
+    _allow_nOr = False
+    _pluralize_ostr = True
+    _separate_unit = True
+
+
 class TimeSpan(NumericalUnitBase):
     _regex_std = re.compile(r"^(?P<numerical>[-+]?[\d]+\.?[\d]*)\s?(?P<order>[fpnum]?s)(?P<residual>)$")  # noqa
     _ostrs = ['fs', 'ps', 'ns', 'us', 'ms', 's']

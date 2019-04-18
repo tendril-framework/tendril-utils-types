@@ -223,6 +223,10 @@ class NumericalUnitBase(TypedComparisonMixin, UnitBase):
     _order_dict = None
     _has_bare_order = False
 
+    _rorders = None
+    _pluralize_ostr = False
+    _separate_unit = False
+
     def __init__(self, value):
         if not self._orders:
             doidx = self._ostrs.index(self._dostr)
@@ -408,10 +412,16 @@ class NumericalUnitBase(TypedComparisonMixin, UnitBase):
         """
         return self._value
 
+    def _pluralize(self, value, ostr):
+        if value != 1 and self._pluralize_ostr:
+            return value, ostr + 's'
+        else:
+            return value, ostr
+
     @property
     def natural_repr(self):
         if self._order_type == 1:
-            return self._value, self._dostr
+            return self._pluralize(self._value, self._dostr)
         ostr = self._dostr
         value = self._value
         done = False
@@ -431,7 +441,15 @@ class NumericalUnitBase(TypedComparisonMixin, UnitBase):
                     value *= Decimal(1000)
                 else:
                     done = True
-        return value, ostr
+        return self._pluralize(value, ostr)
+
+    def _pack_str(self, num, unit):
+        if not isinstance(num, six.string_types):
+            num = str(num)
+        if self._separate_unit:
+            return ' '.join([num, unit])
+        else:
+            return num + unit
 
     @property
     def quantized_repr(self):
@@ -444,7 +462,7 @@ class NumericalUnitBase(TypedComparisonMixin, UnitBase):
         if neg is True:
             num = '-' + num
 
-        return num + unit
+        return self._pack_str(num, unit)
 
     @property
     def integral_repr(self):
@@ -458,7 +476,23 @@ class NumericalUnitBase(TypedComparisonMixin, UnitBase):
         num = str(round_to_n(float(abs(num)), 2))
         if neg is True:
             num = '-' + num
-        return num + unit
+        return self._pack_str(num, unit)
+
+    @property
+    def integral_autoscaled_repr(self):
+        value = self._value
+        rval = None
+        for unit, factor in self._rorders:
+            uv, r = divmod(value, factor)
+            value = r
+            if not uv:
+                continue
+            part = self._pack_str(*self._pluralize(uv, unit))
+            if rval:
+                rval = ', '.join([rval, part])
+            else:
+                rval = part
+        return rval
 
     def fmt_repr(self, fmt):
         num, unit = self.natural_repr
@@ -476,8 +510,9 @@ class NumericalUnitBase(TypedComparisonMixin, UnitBase):
         return fmt.format(*parts)
 
     def __repr__(self):
-        num, unit = self.natural_repr
-        return str(num) + unit
+        if self._rorders:
+            return self.integral_autoscaled_repr
+        return self._pack_str(*self.natural_repr)
 
 
 class DummyUnit(UnitBase):
