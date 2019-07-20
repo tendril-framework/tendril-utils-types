@@ -492,6 +492,9 @@ class NumericalUnitBase(TypedComparisonMixin, UnitBase):
                 rval = ', '.join([rval, part])
             else:
                 rval = part
+        if not rval:
+            unit, factor = self._rorders[-1]
+            return self._pack_str(*self._pluralize(0, unit))
         return rval
 
     def fmt_repr(self, fmt):

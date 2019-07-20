@@ -29,7 +29,7 @@ test_requirements = [
 
 setup(
     name='tendril-utils-types',
-    version='0.1.8',
+    version='0.1.9',
     description="Type classes for tendril",
     long_description=readme,
     author="Chintalagiri Shashank",
