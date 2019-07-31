@@ -30,7 +30,7 @@ config_elements_currency = [
     ),
     ConfigOption(
         "FIXER_IO_API_KEY",
-        "",
+        "FIXME",
         "API Key to use with fixer.io for currency rates."
     ),
 ]
