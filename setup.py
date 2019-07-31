@@ -34,7 +34,7 @@ core_dependencies = [
     'arrow',
     'num2words',
     'tendril-utils-core>=0.1.14',
-    'tendril-config>=0.1.6',
+    'tendril-config>=0.1.9',
     'tendril-utils-www>=0.1.7',
 ]
 
