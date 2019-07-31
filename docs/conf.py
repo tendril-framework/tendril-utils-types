@@ -17,7 +17,7 @@ _github_repo = 'tendril-utils-types'
 _github_user = 'tendril-framework'
 
 _package_name = u'tendril-utils-types'
-_package_author = u'Chintalagiri Shashank'
+_package_author = u'Tendril Framework'
 _package_copyright = u'2015-19'
 _package_logo = '_static/logo.png'
 _package_favicon = '_static/favicon.ico'
@@ -310,7 +310,7 @@ latex_pagestyle_override = r"""
         \fancyhead[L]{\rightmark}
         \fancyhead[C]{\@title, \py@release}
         \fancyhead[R]{\thepage}
-        \fancyfoot[R]{\includegraphics[]{logo_packed.png}}
+        \fancyfoot[R]{\includegraphics[width=0.2\textwidth]{logo_packed.png}}
       }
     \makeatother
 """
@@ -382,7 +382,7 @@ latex_domain_indices = False
 # (source start file, name, description, authors, manual section).
 man_pages = [(
     master_doc, _package_name, 
-    u'{0} Documentation'.format(_package_name),
+    u'{0} documentation'.format(_package_name),
     [author], 1)
 ]
 
