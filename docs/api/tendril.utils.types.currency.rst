@@ -1,5 +1,3 @@
-tendril.utils.types.currency module
-===================================
 
 .. automodule:: tendril.utils.types.currency
     :members:

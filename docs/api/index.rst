@@ -34,7 +34,6 @@ Data Structures / Composite Types
 Related Configuration Options
 -----------------------------
 
-.. automodule:: tendril.config.types
-    :members:
-    :undoc-members:
-    :show-inheritance:
+.. toctree::
+
+   tendril.config.types

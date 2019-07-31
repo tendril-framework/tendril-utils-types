@@ -310,7 +310,7 @@ latex_pagestyle_override = r"""
         \fancyhead[L]{\rightmark}
         \fancyhead[C]{\@title, \py@release}
         \fancyhead[R]{\thepage}
-        \fancyfoot[R]{\includegraphics[width=0.2\textwidth]{logo_packed.png}}
+        \fancyfoot[R]{\includegraphics[width=0.1\textwidth]{logo_packed.png}}
       }
     \makeatother
 """
