@@ -1,4 +1,0 @@
-sphinx
-sphinx-argparse
-alabaster
-setuptools_scm
