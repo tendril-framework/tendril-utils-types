@@ -286,8 +286,9 @@ latex_maketitle_override = r'''
         \begin{minipage}{0.65\textwidth}
         \begin{flushright}    
             {\rm\Huge\py@HeaderFamily \@title} \par
+            \vspace{10pt}
             {\em\large\py@HeaderFamily \py@release\releaseinfo,} {\em\@date}\par
-            \vspace{25pt}
+            \vspace{15pt}
             {\large\py@HeaderFamily
             \begin{tabular}[t]{c}
             \@author
