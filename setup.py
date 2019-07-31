@@ -33,7 +33,7 @@ core_dependencies = [
     'cachecontrol[filecache]',
     'arrow',
     'num2words',
-    'tendril-utils-core>=0.1.14',
+    'tendril-utils-core>=0.1.16',
     'tendril-config>=0.1.9',
     'tendril-utils-www>=0.1.7',
 ]
