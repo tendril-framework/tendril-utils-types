@@ -35,7 +35,7 @@ core_dependencies = [
     'num2words',
     'tendril-utils-core>=0.1.12',
     'tendril-config>=0.1.6',
-    'tendril-utils-www>=0.1.5',
+    'tendril-utils-www>=0.1.6',
 ]
 
 install_requires = core_dependencies + ['wheel']
