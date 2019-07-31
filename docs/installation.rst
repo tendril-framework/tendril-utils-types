@@ -12,7 +12,7 @@ unless you are installing to a virtual environment you can write to.
 
 .. code-block:: console
 
-    $ sudo pip install tendril-utils-types
+    $ pip install tendril-utils-types
 
 
 Installation from Sources
@@ -30,21 +30,16 @@ in your python environment by whatever means you usually use.
     - cachecontrol[filecache]
     - arrow
     - num2words
-    - tendril-utils-core>=0.1.12
-    - tendril-config>=0.1.6
-    - tendril-utils-www>=0.1.5
+    - tendril-utils-core
+    - tendril-config
+    - tendril-utils-www
 
 ``sudo`` may be necessary if you are not installing into a virtual environment.
 
 
 .. code-block:: console
 
-    $ wget https://github.com/tendril-framework/tendril-utils-types/releases/v0.2.0.tar.gz
-    $ TODO untar
-    ...
-    $ TODO cd into folder
     $ python setup.py install
-    ...
 
 
 Installation for Development
