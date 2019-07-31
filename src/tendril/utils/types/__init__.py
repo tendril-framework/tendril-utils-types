@@ -94,43 +94,7 @@ package are as follows :
   module is pulled out of Tendril into it's own units library, and maintaining
   that isn't something I'm likely to do alone.
 
-Types
------
-
-.. toctree::
-
-   tendril.utils.types.currency
-   tendril.utils.types.lengths
-   tendril.utils.types.unitbase
-   tendril.utils.types.electromagnetic
-   tendril.utils.types.thermodynamic
-   tendril.utils.types.time
-
-Data Structures / Composite Types
----------------------------------
-
-.. toctree::
-
-   tendril.utils.types.signalbase
-   tendril.utils.types.cartesian
-
-.. rubric:: Inheritance Diagram
-
-.. inheritance-diagram::
-   tendril.utils.types
-   tendril.utils.types.cartesian
-   tendril.utils.types.currency
-   tendril.utils.types.electromagnetic
-   tendril.utils.types.thermodynamic
-   tendril.utils.types.lengths
-   tendril.utils.types.time
-   tendril.utils.types.signalbase
-   tendril.utils.types.unitbase
-
 """
-
-
-__version__ = '0.1.2'
 
 
 class ParseException(Exception):

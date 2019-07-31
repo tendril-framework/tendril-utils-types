@@ -208,7 +208,7 @@ class NumericalUnitBase(TypedComparisonMixin, UnitBase):
         __sub__
         __mul__
         __div__
-        __cmpkey
+        _cmpkey
 
     """
     _orders = None
