@@ -12,6 +12,9 @@
 .. image:: https://img.shields.io/coveralls/github/tendril-framework/tendril-utils-types.svg?logo=coveralls
     :target: https://coveralls.io/github/tendril-framework/tendril-utils-types
 
+.. image:: https://img.shields.io/codacy/grade/eb5c1b09e6454c57910f370a6b4536c4?logo=codacy
+    :target: https://www.codacy.com/app/chintal/tendril-utils-types
+
 .. image:: https://img.shields.io/requires/github/tendril-framework/tendril-utils-types.svg
     :target: https://requires.io/github/tendril-framework/tendril-utils-types/requirements
 
