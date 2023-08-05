@@ -23,11 +23,10 @@ from .unitbase import NumericalUnitBase
 
 class Temperature(NumericalUnitBase):
     _regex_std = re.compile(r'^(?P<numerical>[-+]?[\d]+\.?[\d]*)\s?(?P<order>(mK)?[CFK]?)(?P<residual>)$')  # noqa
-    _orders = [('C', lambda x: x + D('273.14')),
-               ('F', lambda x: ((x - D('32')) * D('5')) / D('9') + D('273.14')),
-               ('K', 1),
-               ('mK', D('0.001'))]
-    _dostr = 'K'
+    _orders = [('C', 1),
+               ('F', lambda x: ((x - D('32')) * D('5')) / D('9')),
+               ('K', lambda x: x - D('273.14'))]
+    _dostr = 'C'
     _allow_nOr = False
 
     def __repr__(self):
