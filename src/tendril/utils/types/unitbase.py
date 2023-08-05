@@ -228,6 +228,8 @@ class NumericalUnitBase(TypedComparisonMixin, UnitBase):
     _separate_unit = False
 
     def __init__(self, value):
+        if isinstance(value, bytes):
+            value = value.decode()
         if not self._orders:
             doidx = self._ostrs.index(self._dostr)
             self._orders = [(ostr, (3 * (idx - doidx)))
