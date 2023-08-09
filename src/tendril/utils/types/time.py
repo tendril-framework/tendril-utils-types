@@ -20,6 +20,7 @@ See the COPYING, README, and INSTALL files for more information
 """
 
 import arrow.arrow
+from dateutil.relativedelta import relativedelta
 
 from .unitbase import NumericalUnitBase
 from .unitbase import Percentage
@@ -78,7 +79,7 @@ class TimeSpan(NumericalUnitBase):
             value = value.microseconds / Decimal('1000000.0') + value.seconds + \
                 value.minutes * 60 + value.hours * 3600 + \
                 value.days * 3600 * 24
-        elif not isinstance(value, Number) and not isinstance(value, str):
+        elif not isinstance(value, Number) and not isinstance(value, (str, bytes)):
             raise TypeError(
                 "Can't construct timespan object from {0}".format(value)
             )
@@ -94,7 +95,16 @@ class TimeSpan(NumericalUnitBase):
     def timedelta(self):
         seconds = int(self._value)
         microseconds = int((self._value-seconds) * 1000000)
-        return TimeDelta(seconds=seconds, microseconds=microseconds)
+        rd = relativedelta(seconds=seconds)
+        return TimeDelta(
+            years=rd.years,
+            months=rd.months,
+            days=rd.days,
+            hours=rd.hours,
+            minutes=rd.minutes,
+            seconds=rd.seconds,
+            microseconds=microseconds
+        )
 
     def __rdiv__(self, other):
         if isinstance(other, Percentage):
@@ -192,11 +202,22 @@ class TimeDelta(object):
             return NotImplemented
 
     def __repr__(self):
-        return ':'.join(
-            [str(self.years), str(self.months), str(self.days),
-             str(self.hours), str(self.minutes), str(self.seconds),
-             str(self.microseconds)]
-        )
+        return ':'.join(self.trim())
+
+    def trim(self):
+        parts = ['years', 'months', 'days', 'hours', 'minutes', 'seconds', 'microseconds']
+        walker = 0
+        value = getattr(self, parts[walker])
+        while not value and walker < len(parts) - 1:
+            walker += 1
+            value = getattr(self, parts[walker])
+        rv = {}
+        while walker < len(parts):
+            rv[parts[walker]] = getattr(self, parts[walker])
+            walker += 1
+        if not rv['microseconds']:
+            rv.pop('microseconds')
+        return rv
 
     @property
     def timespan(self):
